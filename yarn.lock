@@ -982,6 +982,13 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@react-native-async-storage/async-storage@^1.15.5":
+  version "1.15.5"
+  resolved "https://registry.nlark.com/@react-native-async-storage/async-storage/download/@react-native-async-storage/async-storage-1.15.5.tgz#0d221a5ef1cd7a6494a42fcaad43136d68379afb"
+  integrity sha1-DSIaXvHNemSUpC/KrUMTbWg3mvs=
+  dependencies:
+    deep-assign "^3.0.0"
+
 "@react-native-community/cli-debugger-ui@^5.0.1-alpha.1":
   version "5.0.1-alpha.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-5.0.1-alpha.1.tgz#09a856ccd2954cf16eea59b14dd26ae66720e4e6"
@@ -2400,6 +2407,13 @@ dedent@^0.7.0:
   resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
   integrity sha1-JJXduvbrh0q7Dhvp3yLS5aVEMmw=
 
+deep-assign@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/deep-assign/download/deep-assign-3.0.0.tgz#c8e4c4d401cba25550a2f0f486a2e75bc5f219a2"
+  integrity sha1-yOTE1AHLolVQovD0hqLnW8XyGaI=
+  dependencies:
+    is-obj "^1.0.0"
+
 deep-diff@^0.3.5:
   version "0.3.8"
   resolved "https://registry.npm.taobao.org/deep-diff/download/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
@@ -3664,6 +3678,11 @@ is-number@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
+
+is-obj@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/is-obj/download/is-obj-1.0.1.tgz?cache=0&sync_timestamp=1618600242427&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-obj%2Fdownload%2Fis-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
+  integrity sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
 
 is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   version "2.0.4"

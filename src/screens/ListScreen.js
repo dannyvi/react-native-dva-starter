@@ -71,6 +71,11 @@ function ListScreen({ navigation, home, dataLoading, dispatch }) {
             <Text style={{ color: 'yellow', fontWeight: 'bold' }}>Hi</Text>
             {/*<Ionicons name='ios-add' color='#fff' size={70} />*/}
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Login')}
+            style={styles.fabButton}>
+            <Text style={{ color: 'yellow', fontWeight: 'bold' }}>Login</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </>

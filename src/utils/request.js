@@ -3,6 +3,8 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationActions } from 'react-navigation';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -31,22 +33,22 @@ const errorHandler = error => {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
     if (status === 401) {
-      console.log('401')
+      console.log('401');
       // notification.warning({
       //   message: '登录信息过期,请重新登陆!',
       //   duration: 3,
       // });
-      // history.replace({ pathname: '/user/login' });
+      // history.replace({ pathname: '/user/LoginScreen' });
       window.sessionStorage.clear();
     } else {
-      console.log('error')
+      console.log('error');
       // notification.error({
       //   message: `请求错误 ${status}: ${url}`,
       //   description: errorText,
       // });
     }
   } else if (!response) {
-    console.log('500')
+    console.log('500');
     // notification.error({
     //   description: '您的网络发生异常，无法连接服务器',
     //   message: '网络异常',
@@ -68,18 +70,28 @@ const request = extend({
 });
 request.interceptors.request.use(async (url, options) => {
   // 此处为拦截器，每次发送请求之前判断能否取到token
-  const token = 'a'; // sessionStorage.getItem('token');
+  try {
+    console.log('hddi');
+    let token = await AsyncStorage.getItem('token');
 
-  if (token) {
-    const headers = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: token,
-    };
-    return {
-      url,
-      options: { ...options, headers },
-    };
+    console.log('token', token);
+    if (!token) {
+      console.log('no token');
+      NavigationActions.navigate('Login');
+    }
+    if (token) {
+      const headers = {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: token,
+      };
+      return {
+        url,
+        options: { ...options, headers },
+      };
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -91,7 +103,7 @@ request.interceptors.request.use(async (url, options) => {
 //     notification.error({
 //       message: `身份验证过期,请重新登陆`
 //     });
-//     // history.push('/user/login')
+//     // history.push('/user/LoginScreen')
 //   } else {
 //     result = response;
 //   }

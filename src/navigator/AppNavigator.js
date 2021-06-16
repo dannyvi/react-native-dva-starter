@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ListScreen from '../screens/ListScreen';
 import ModalScreen from '../screens/ModalScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ function MainStackNavigator() {
         }}>
         <Stack.Screen name="List" component={ListScreen} />
         <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

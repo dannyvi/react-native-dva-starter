@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
   Text,
   View,
   TextInput,
-} from 'react-native';
-// import { Ionicons } from '@expo/vector-icons';
+} from 'react-native'
 
 function ModalScreen({ navigation }) {
-  let [value, setValue] = useState('');
+  let [value, setValue] = useState('')
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -22,26 +21,18 @@ function ModalScreen({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={styles.modalContainer}>
-          <Text style={{ color: '#444', fontSize: 20 }}>
-            What do you want to do?
-          </Text>
+          <Text style={styles.titleContainer}>What do you want to do?</Text>
           <TextInput
-            style={{
-              height: 50,
-              width: 200,
-              padding: 5,
-              borderColor: 'gray',
-              borderBottomWidth: 1,
-            }}
+            style={styles.textContainer}
             numberOfLines={1}
-            onChangeText={value => setValue(value)}
+            onChangeText={setValue}
             value={value}
             clearButtonMode="while-editing"
           />
         </View>
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -82,5 +73,17 @@ const styles = StyleSheet.create({
     top: 10,
     left: 50,
   },
-});
-export default ModalScreen;
+  textContainer: {
+    height: 50,
+    width: 200,
+    padding: 5,
+    borderColor: 'gray',
+    borderBottomWidth: 1,
+  },
+  titleContainer: {
+    color: '#444',
+    fontSize: 20,
+  },
+})
+
+export default ModalScreen

@@ -2,111 +2,75 @@
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
-import { extend } from 'umi-request';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationActions } from 'react-navigation';
+import { extend } from 'umi-request'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as RootNavigation from '../navigator/RootNavigation'
 
-const codeMessage = {
-  200: '服务器成功返回请求的数据。',
-  201: '新建或修改数据成功。',
-  202: '一个请求已经进入后台排队（异步任务）。',
-  204: '删除数据成功。',
-  400: '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
-  401: '用户没有权限（令牌、用户名、密码错误）。',
-  403: '用户得到授权，但是访问是被禁止的。',
-  404: '发出的请求针对的是不存在的记录，服务器没有进行操作。',
-  406: '请求的格式不可得。',
-  410: '请求的资源被永久删除，且不会再得到的。',
-  422: '当创建一个对象时，发生一个验证错误。',
-  500: '服务器发生错误，请检查服务器。',
-  502: '网关错误。',
-  503: '服务不可用，服务器暂时过载或维护。',
-  504: '网关超时。',
-};
-/**
- * 异常处理程序
- */
-
-const errorHandler = error => {
-  const { response } = error;
-  if (response && response.status) {
-    const errorText = codeMessage[response.status] || response.statusText;
-    const { status, url } = response;
-    if (status === 401) {
-      console.log('401');
-      // notification.warning({
-      //   message: '登录信息过期,请重新登陆!',
-      //   duration: 3,
-      // });
-      // history.replace({ pathname: '/user/LoginScreen' });
-      window.sessionStorage.clear();
-    } else {
-      console.log('error');
-      // notification.error({
-      //   message: `请求错误 ${status}: ${url}`,
-      //   description: errorText,
-      // });
-    }
-  } else if (!response) {
-    console.log('500');
-    // notification.error({
-    //   description: '您的网络发生异常，无法连接服务器',
-    //   message: '网络异常',
-    // });
+const errorHandler = (error: { response: Response, data: any }): Response => {
+  const {
+    data: { errcode, errmsg },
+    response,
+  } = error
+  if (!errcode && response.status >= 500) {
+    console.log({
+      description: '您的网络发生异常，无法连接服务器',
+      message: '网络异常',
+    })
+  } else if (!errcode && response.status >= 400) {
+    console.log({
+      description: 'DEBUG',
+      message: '调试错误',
+    })
+  } else if (response && !response.ok) {
+    console.log({
+      message: '请求错误',
+      description: errmsg,
+    })
   }
-
-  return null;
-  // 当response走到这里时,返回null,在models里面做处理
-};
-/**
- * 配置request请求时的默认参数
- */
+  return response
+}
 
 const request = extend({
-  prefix: 'https://taskimage.com',
+  prefix: 'https://taskimage.com/api/v2/app',
   errorHandler,
-  // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
-});
-request.interceptors.request.use(async (url, options) => {
-  // 此处为拦截器，每次发送请求之前判断能否取到token
-  try {
-    console.log('hddi');
-    let token = await AsyncStorage.getItem('token');
+})
+request.use(async (ctx, next) => {
+  const { req } = ctx
+  const { url, options } = req
+  let tokenSessionStorage = await AsyncStorage.getItem('token')
+  console.log('url', url)
+  console.log('token', tokenSessionStorage)
 
-    console.log('token', token);
-    if (!token) {
-      console.log('no token');
-      NavigationActions.navigate('Login');
-    }
-    if (token) {
-      const headers = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: token,
-      };
-      return {
-        url,
-        options: { ...options, headers },
-      };
-    }
-  } catch (err) {
-    console.log(err);
+  if (
+    (tokenSessionStorage === null || tokenSessionStorage.length === 0) &&
+    !url.endsWith('/token')
+  ) {
+    RootNavigation.navigate('Login', {})
+    return
   }
-});
 
-// response返回code统一拦截
-// request.interceptors.response.use(async (response) => {
-//   let result;
-//   const data = await response.clone().json();
-//   if (data.code === 401 && !data.flag) {
-//     notification.error({
-//       message: `身份验证过期,请重新登陆`
-//     });
-//     // history.push('/user/LoginScreen')
-//   } else {
-//     result = response;
-//   }
-//   return result;
+  if (tokenSessionStorage === null) {
+    tokenSessionStorage = ''
+  }
 
-export default request;
+  options.headers = {
+    sitesecret: 'pcsecret',
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: tokenSessionStorage,
+  }
+
+  await next()
+
+  const { res } = ctx
+
+  let token = res?.access_token
+
+  if (token !== undefined && token !== null && token.length > 0) {
+    token = `Bearer  ${token}`
+    AsyncStorage.setItem('token', token)
+  }
+})
+
+export default request

@@ -1,15 +1,26 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import ListScreen from '../screens/ListScreen';
-import ModalScreen from '../screens/ModalScreen';
-import LoginScreen from '../screens/LoginScreen';
+import * as React from 'react'
+import { useEffect } from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import ListScreen from '../screens/ListScreen'
+import ModalScreen from '../screens/ModalScreen'
+import LoginScreen from '../screens/LoginScreen'
+import { isReadyRef, navigationRef } from './RootNavigation'
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 function MainStackNavigator() {
+  useEffect(() => {
+    return () => {
+      isReadyRef.current = false
+    }
+  }, [])
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        isReadyRef.current = true
+      }}>
       <Stack.Navigator
         mode="modal"
         headerMode="none"
@@ -37,7 +48,7 @@ function MainStackNavigator() {
         <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }
 
-export default MainStackNavigator;
+export default MainStackNavigator

@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rebeccapurple',
+    backgroundColor: '#2a1265',
     height: 125,
     paddingTop: 20,
   },

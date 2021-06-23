@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   StyleSheet,
   StatusBar,
@@ -9,6 +9,8 @@ import {
 
 import Header from '../components/Header'
 import { connect } from '../utils/connect'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as RootNavigation from '../navigator/RootNavigation'
 
 function ListView({ home }) {
   const list = home?.data || []
@@ -36,7 +38,13 @@ function ListScreen({ navigation, home, dispatch }) {
       type: 'home/hideList',
     })
   }
-  // console.log('hello', home);
+
+  useEffect(() => {
+    dispatch({
+      type: 'home/currentUser',
+    })
+  }, [dispatch])
+
   return (
     <>
       <StatusBar barStyle="light-content" />
@@ -45,9 +53,12 @@ function ListScreen({ navigation, home, dispatch }) {
         <ListView home={home} />
         <View style={styles.fabContainer}>
           <TouchableOpacity
-            onPress={() => dispatch({ type: 'home/getToken' })}
+            onPress={() => {
+              // AsyncStorage.removeItem('token')
+              RootNavigation.push('Home')
+            }}
             style={styles.fabButton}>
-            <Text style={styles.button}>Token</Text>
+            <Text style={styles.button}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={hideList} style={styles.fabButton}>
             <Text style={styles.button}>Hide</Text>
@@ -57,7 +68,7 @@ function ListScreen({ navigation, home, dispatch }) {
             {/*<Ionicons name='ios-add' color='#fff' size={70} />*/}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Modal')}
+            onPress={() => RootNavigation.navigate('Modal')}
             style={styles.fabButton}>
             <Text style={styles.button}>Hi</Text>
             {/*<Ionicons name='ios-add' color='#fff' size={70} />*/}
@@ -66,6 +77,14 @@ function ListScreen({ navigation, home, dispatch }) {
             onPress={() => navigation.navigate('Login')}
             style={styles.fabButton}>
             <Text style={styles.button}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              AsyncStorage.removeItem('token')
+              RootNavigation.push('Login')
+            }}
+            style={styles.fabButton}>
+            <Text style={styles.button}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -87,9 +106,9 @@ const styles = StyleSheet.create({
   },
   fabButton: {
     backgroundColor: 'blue',
-    borderRadius: 35,
-    width: 70,
-    height: 70,
+    borderRadius: 10,
+    width: 60,
+    height: 30,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -107,5 +126,5 @@ const styles = StyleSheet.create({
 
 export default connect(({ home, loading }) => ({
   home,
-  dataLoading: loading.effects['home/zhihu'],
+  dataLoading: loading.effects['home/showList'],
 }))(ListScreen)

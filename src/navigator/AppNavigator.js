@@ -6,6 +6,7 @@ import ListScreen from '../screens/ListScreen'
 import ModalScreen from '../screens/ModalScreen'
 import LoginScreen from '../screens/LoginScreen'
 import { isReadyRef, navigationRef } from './RootNavigation'
+import HomeScreen from '../screens/HomeScreen'
 
 const Stack = createStackNavigator()
 
@@ -43,9 +44,10 @@ function MainStackNavigator() {
             },
           }),
         }}>
-        <Stack.Screen name="List" component={ListScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Modal" component={ModalScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="List" component={ListScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

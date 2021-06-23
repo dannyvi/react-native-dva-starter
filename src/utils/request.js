@@ -5,6 +5,7 @@
 import { extend } from 'umi-request'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as RootNavigation from '../navigator/RootNavigation'
+import { Alert } from 'react-native'
 
 const errorHandler = (error: { response: Response, data: any }): Response => {
   const {
@@ -26,6 +27,8 @@ const errorHandler = (error: { response: Response, data: any }): Response => {
       message: '请求错误',
       description: errmsg,
     })
+    console.log(errmsg)
+    Alert.alert(errmsg)
   }
   return response
 }
@@ -46,7 +49,9 @@ request.use(async (ctx, next) => {
     (tokenSessionStorage === null || tokenSessionStorage.length === 0) &&
     !url.endsWith('/token')
   ) {
-    RootNavigation.navigate('Login', {})
+    console.log('go to login page')
+    RootNavigation.push('Login')
+    console.log('naved')
     return
   }
 
@@ -70,6 +75,8 @@ request.use(async (ctx, next) => {
   if (token !== undefined && token !== null && token.length > 0) {
     token = `Bearer  ${token}`
     AsyncStorage.setItem('token', token)
+    console.log('---', token)
+    RootNavigation.goBack()
   }
 })
 

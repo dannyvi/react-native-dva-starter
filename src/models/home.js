@@ -1,4 +1,4 @@
-import { requestToken, requestList } from '../services/home'
+import { requestToken, requestList, requestCurrentUser } from '../services/home'
 
 const home = {
   namespace: 'home',
@@ -8,6 +8,7 @@ const home = {
     verCode: '',
     number: 1,
     content: [],
+    currentUser: {},
   },
   effects: {
     *showList(_, { call, put }) {
@@ -24,9 +25,18 @@ const home = {
         payload: { data: [] },
       })
     },
-    *getToken(_, { call, put }) {
-      const res = yield call(requestToken)
+    *getToken({ payload }, { call }) {
+      console.log('payload', payload)
+      const res = yield call(requestToken, payload)
       console.log('res', res)
+      // yield put({
+      //   type: 'save',
+      //   payload: res,
+      // })
+    },
+    *currentUser(_, { call, put }) {
+      const res = yield call(requestCurrentUser)
+      console.log('current user', res)
       yield put({
         type: 'save',
         payload: {},

@@ -39,13 +39,14 @@ const home = {
       console.log('current user', res)
       yield put({
         type: 'save',
-        payload: {},
+        payload: { currentUser: res },
       })
     },
   },
 
   reducers: {
     save(state, { payload }) {
+      console.log('payload', payload)
       return { ...state, ...payload }
     },
   },

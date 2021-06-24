@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import { useForm } from 'react-hook-form'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Icon from '../../assets/vectorIcons'
+import { IconFontAwesome } from '../../assets/vectorIcons'
 import { connect } from '../../utils/connect'
 
 function Login({ dispatch }) {
@@ -45,9 +45,9 @@ function Login({ dispatch }) {
         selectionColor="white"
         inputContainerStyle={styles.input}
         inputStyle={styles.input}
-        leftIcon={<Icon name="user" size={18} color="#00ff38" />}
+        leftIcon={<IconFontAwesome name="user" size={18} color="#00ff38" />}
         placeholderTextColor="#99cc9e"
-        autoCompleteType="default"
+        autoCompleteType="username"
         autoCapitalize="none"
         keyboardType="default"
         textContentType="username"
@@ -58,7 +58,7 @@ function Login({ dispatch }) {
         selectionColor="white"
         inputContainerStyle={styles.input}
         inputStyle={styles.input}
-        leftIcon={<Icon name="lock" size={18} color="#ff3e00" />}
+        leftIcon={<IconFontAwesome name="lock" size={18} color="#ff3e00" />}
         placeholderTextColor="#99cc9e"
         secureTextEntry
         autoCompleteType="password"

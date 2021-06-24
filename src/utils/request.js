@@ -50,7 +50,7 @@ request.use(async (ctx, next) => {
     !url.endsWith('/token')
   ) {
     console.log('go to login page')
-    RootNavigation.push('Login')
+    RootNavigation.navigate('Login')
     console.log('naved')
     return
   }
@@ -76,7 +76,8 @@ request.use(async (ctx, next) => {
     token = `Bearer  ${token}`
     AsyncStorage.setItem('token', token)
     console.log('---', token)
-    RootNavigation.goBack()
+    // RootNavigation.goBack()
+    RootNavigation.navigate('Home')
   }
 })
 

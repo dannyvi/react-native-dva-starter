@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, StatusBar, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
-import Header from '../components/Header'
 import { connect } from '../utils/connect'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
-// import * as RootNavigation from '../navigator/RootNavigation'
-import NavBar from '../components/NavBar'
+import Page from '../components/Page'
 
 function ListView({ home }) {
   const list = home?.data || []
   console.log('hi', home)
   return (
     <View style={styles.listContainer}>
-      <Text>Here goes list items</Text>
-      <Text>N</Text>
+      <Text style={styles.text}>Here goes list items</Text>
       {list.map(x => (
-        <Text key={x.id}>{x.name}</Text>
+        <Text style={styles.text} key={x.id}>
+          {x.name}
+        </Text>
       ))}
     </View>
   )
@@ -26,49 +24,29 @@ function HomeScreen({ home, dispatch }) {
     dispatch({
       type: 'home/currentUser',
     })
+    dispatch({
+      type: 'home/showList',
+    })
   }, [dispatch])
 
   return (
-    <>
-      <StatusBar barStyle="light-content" />
-      <View style={styles.container}>
-        <Header title={'Home'} />
-        <ListView home={home} />
-        <NavBar />
-      </View>
-    </>
+    <Page title="Home">
+      <ListView home={home} />
+    </Page>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'blueviolet',
+  text: {
+    color: 'lightyellow',
+    padding: 2,
   },
-  fabContainer: {
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-    position: 'absolute',
-    right: 10,
-    bottom: 20,
-  },
-  fabButton: {
-    backgroundColor: 'blue',
-    borderRadius: 35,
-    width: 70,
-    height: 70,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: { color: 'yellow', fontWeight: 'bold' },
   listContainer: {
-    backgroundColor: 'yellow',
+    backgroundColor: '#205d40',
+    color: 'white',
     flex: 1,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     paddingHorizontal: 20,
     paddingVertical: 20,
-    marginTop: 50,
   },
 })
 

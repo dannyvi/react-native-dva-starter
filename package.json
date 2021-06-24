@@ -16,6 +16,8 @@
     "dva-core": "^2.0.4",
     "dva-immer": "^1.0.0",
     "dva-loading": "^3.0.22",
+    "gl-react": "^5.0.0",
+    "gl-react-native": "^5.0.0",
     "react": "17.0.1",
     "react-hook-form": "^7.9.0",
     "react-native": "0.64.1",

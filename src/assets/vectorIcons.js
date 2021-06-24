@@ -1,5 +1,7 @@
-import Icon from 'react-native-vector-icons/FontAwesome'
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome'
+import IconAnt from 'react-native-vector-icons/AntDesign'
 
-Icon.loadFont()
+IconFontAwesome.loadFont()
+IconAnt.loadFont()
 
-export default Icon
+export { IconFontAwesome, IconAnt }

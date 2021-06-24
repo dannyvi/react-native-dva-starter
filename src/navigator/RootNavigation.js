@@ -16,8 +16,8 @@ export function navigate(name, params) {
 export function push(name, params) {
   if (isReadyRef.current && navigationRef.current) {
     console.log('pushing ')
-    console.log(navigationRef.current)
-    console.log(navigationRef.current.dispatch)
+    // console.log(navigationRef.current)
+    // console.log(navigationRef.current.dispatch)
     navigationRef.current?.dispatch(StackActions.push(name, params))
     console.log('finished')
   } else {

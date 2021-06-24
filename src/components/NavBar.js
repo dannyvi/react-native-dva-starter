@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as RootNavigation from '../navigator/RootNavigation'
-import { IconFontAwesome, IconAnt } from '../assets/vectorIcons'
+import { IconAnt } from '../assets/vectorIcons'
 
 function NavBar() {
   return (
@@ -11,18 +11,8 @@ function NavBar() {
       <TouchableOpacity
         onPress={() => RootNavigation.navigate('Home')}
         style={styles.fabButton}>
+        <IconAnt name="home" size={18} color="#ff3e00" />
         <Text style={styles.text}>Home</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => RootNavigation.navigate('List')}
-        style={styles.fabButton}>
-        <IconFontAwesome name="lock" size={18} color="#ff3e00" />
-        <Text style={styles.text}>List</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => RootNavigation.navigate('Modal')}
-        style={styles.fabButton}>
-        <Text style={styles.text}>Hi</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => RootNavigation.navigate('My')}

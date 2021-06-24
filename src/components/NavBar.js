@@ -14,15 +14,10 @@ function NavBar() {
         <Text style={styles.text}>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => RootNavigation.navigate('List')}
+        onPress={() => RootNavigation.navigate('Triangle')}
         style={styles.fabButton}>
         <IconFontAwesome name="lock" size={18} color="#ff3e00" />
-        <Text style={styles.text}>List</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => RootNavigation.navigate('Modal')}
-        style={styles.fabButton}>
-        <Text style={styles.text}>Hi</Text>
+        <Text style={styles.text}>Triangle</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => RootNavigation.navigate('My')}
